@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Авто Блокнот — Статистика и Сообщество</title>
+  <link rel="icon" type="image/webp" href="ic_launcher.webp">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="glow-bg"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="/" class="logo">
+        <img src="ic_launcher.webp" alt="Авто Блокнот" class="logo-img-web">
+        <span class="logo-text">Авто<span>Блокнот</span></span>
+      </a>
+      <nav>
+        <button class="nav-btn active" data-tab="stats">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>
+          Статистика
+        </button>
+        <button class="nav-btn" data-tab="buyer">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+          Выбор авто
+        </button>
+        <button class="nav-btn" data-tab="feed">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          Гараж сообщества
+        </button>
+        <button class="nav-btn" data-tab="garage" id="garageTabBtn">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Мой гараж
+        </button>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Переключить тему">
+          <svg class="sun-icon icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- TAB: Stats (Global statistics) -->
+    <section id="tab-stats" class="tab-content active">
+      <div class="welcome-banner">
+        <h1>Аналитика автомобильного парка</h1>
+        <p>Сводная статистика на основе анонимизированных данных пользователей приложения Авто Блокнот.</p>
+      </div>
+
+      <!-- General Statistics Grid -->
+      <div class="metrics-grid">
+        <div class="metric-card glass">
+          <div class="metric-header">
+            <span>Всего автомобилей</span>
+            <div class="metric-icon blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="15" cy="17" r="2"></circle></svg>
+            </div>
+          </div>
+          <div class="metric-value" id="stat-total-cars">-</div>
+          <div class="metric-desc">В нашей базе данных</div>
+        </div>
+
+        <div class="metric-card glass">
+          <div class="metric-header">
+            <span>Общие расходы</span>
+            <div class="metric-icon purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+          </div>
+          <div class="metric-value" id="stat-total-expenses">-</div>
+          <div class="metric-desc">Внесено в журналы затрат</div>
+        </div>
+
+        <div class="metric-card glass">
+          <div class="metric-header">
+            <span>Средний пробег</span>
+            <div class="metric-icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+          </div>
+          <div class="metric-value" id="stat-avg-mileage">-</div>
+          <div class="metric-desc">Километров на автомобиль</div>
+        </div>
+
+        <div class="metric-card glass">
+          <div class="metric-header">
+            <span>Затраты на 1 км</span>
+            <div class="metric-icon orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path><circle cx="12" cy="12" r="10"></circle></svg>
+            </div>
+          </div>
+          <div class="metric-value" id="stat-avg-per-km">-</div>
+          <div class="metric-desc">Средний расход на километр пути</div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="charts-grid">
+        <div class="chart-card glass">
+          <h3>Популярные марки авто</h3>
+          <div class="chart-container">
+            <canvas id="chart-brands"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card glass">
+          <h3>Распределение расходов по категориям</h3>
+          <div class="chart-container">
+            <canvas id="chart-categories"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card glass">
+          <h3>Популярность типов топлива</h3>
+          <div class="chart-container flex-center">
+            <canvas id="chart-fuel"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card glass">
+          <h3>Актуальные цены на топливо (АЗС)</h3>
+          <div class="chart-container">
+            <canvas id="chart-fuel-prices"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: Buyer Guide -->
+    <section id="tab-buyer" class="tab-content">
+      <div class="welcome-banner">
+        <h1>Помощник покупателя</h1>
+        <p>Анализируйте надежность, стоимость владения и частые поломки интересующих вас моделей на основе реального опыта водителей.</p>
+      </div>
+
+      <div class="buyer-selector-card glass">
+        <div class="selector-row">
+          <div class="form-group flex-1">
+            <label for="buyer-brand-select">Марка автомобиля</label>
+            <select id="buyer-brand-select" class="glass-select">
+              <option value="">Выберите марку...</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <label for="buyer-model-select">Модель</label>
+            <select id="buyer-model-select" class="glass-select" disabled>
+              <option value="">Сначала выберите марку...</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Container (hidden by default) -->
+      <div id="buyer-result-container" class="buyer-result-wrapper" style="display: none;">
+        <!-- Metrics Summary -->
+        <div class="metrics-grid">
+          <div class="metric-card glass">
+            <div class="metric-header">
+              <span>Индекс надежности</span>
+              <div class="metric-icon green" id="buyer-reliability-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="buyer-stat-reliability">-</div>
+            <div class="metric-desc" id="buyer-stat-reliability-desc">Затраты на ремонт от общих</div>
+          </div>
+
+          <div class="metric-card glass">
+            <div class="metric-header">
+              <span>Средний ремонт в год</span>
+              <div class="metric-icon blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="buyer-stat-avg-maintenance">-</div>
+            <div class="metric-desc">Сумма ремонта на 1 авто</div>
+          </div>
+
+          <div class="metric-card glass">
+            <div class="metric-header">
+              <span>Общая стоимость 1 км</span>
+              <div class="metric-icon orange">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="buyer-stat-cost-per-km">-</div>
+            <div class="metric-desc">С учетом топлива и запчастей</div>
+          </div>
+
+          <div class="metric-card glass">
+            <div class="metric-header">
+              <span>Выборка данных</span>
+              <div class="metric-icon purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="buyer-stat-samples">-</div>
+            <div class="metric-desc">Автомобилей в анализе</div>
+          </div>
+        </div>
+
+        <div class="buyer-details-layout">
+          <!-- Left side: Category Distribution -->
+          <div class="chart-card glass">
+            <h3>Структура расходов владельцев</h3>
+            <div class="chart-container" style="min-height: 250px;">
+              <canvas id="chart-buyer-categories"></canvas>
+            </div>
+          </div>
+
+          <!-- Right side: Most Common Replacements -->
+          <div class="chart-card glass">
+            <h3>Карта обслуживания и частых поломок</h3>
+            <p class="buyer-note">Средний пробег и стоимость замены деталей по логам водителей:</p>
+            <div class="buyer-repairs-list" id="buyer-repairs-container">
+              <!-- Loaded dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Empty state guide -->
+      <div id="buyer-empty-state" class="buyer-empty-state-wrapper glass">
+        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <h3>Выберите марку и модель автомобиля</h3>
+        <p>Выберите интересующую вас модель в меню выше для формирования интерактивного отчета.</p>
+      </div>
+    </section>
+
+    <!-- TAB: Feed (Public shared cars) -->
+    <section id="tab-feed" class="tab-content">
+      <div class="welcome-banner">
+        <h1>Гараж сообщества</h1>
+        <p>Просматривайте реальные данные об обслуживании и расходах автомобилей, которыми поделились пользователи.</p>
+      </div>
+
+      <div class="search-bar-container">
+        <input type="text" id="feed-search" placeholder="Поиск по марке, модели или владельцу..." class="search-input glass">
+      </div>
+
+      <!-- Shared Cars Grid -->
+      <div class="cars-grid" id="shared-cars-container">
+        <!-- Loaded dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB: My Garage (Sharing dashboard / Login) -->
+    <section id="tab-garage" class="tab-content">
+      
+      <!-- AUTH PANEL -->
+      <div id="auth-panel" class="auth-wrapper glass">
+        <div class="auth-tabs">
+          <button class="auth-tab-btn active" id="btn-login-tab">Вход</button>
+          <button class="auth-tab-btn" id="btn-register-tab">Регистрация</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form active">
+          <h2>Авторизация</h2>
+          <p class="auth-desc">Используйте ваш email и пароль из приложения Авто Блокнот</p>
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" required placeholder="example@mail.ru" autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label for="login-password">Пароль</label>
+            <input type="password" id="login-password" required placeholder="••••••••" autocomplete="current-password">
+          </div>
+          <button type="submit" class="submit-btn">Войти в кабинет</button>
+          <div class="form-status" id="login-status"></div>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" class="auth-form">
+          <h2>Регистрация нового аккаунта</h2>
+          <p class="auth-desc">Создайте аккаунт для синхронизации и шаринга данных</p>
+          <div class="form-group">
+            <label for="reg-name">Имя</label>
+            <input type="text" id="reg-name" required placeholder="Александр" autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="reg-email">Email</label>
+            <input type="email" id="reg-email" required placeholder="example@mail.ru" autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label for="reg-password">Пароль</label>
+            <input type="password" id="reg-password" required placeholder="Минимум 6 символов" autocomplete="new-password">
+          </div>
+          <button type="submit" class="submit-btn">Зарегистрироваться</button>
+          <div class="form-status" id="register-status"></div>
+        </form>
+      </div>
+
+      <!-- LOGGED IN PANEL -->
+      <div id="garage-panel" class="garage-panel-container" style="display: none;">
+        <div class="user-header glass">
+          <div class="user-info">
+            <div class="avatar" id="user-avatar">U</div>
+            <div>
+              <h2 id="user-display-name">Имя Пользователя</h2>
+              <p id="user-display-email">email@example.com</p>
+            </div>
+          </div>
+          <button class="logout-btn" id="btn-logout">Выйти</button>
+        </div>
+
+        <div class="garage-section-title">
+          <h3>Мои Автомобили</h3>
+          <span class="badge" id="my-cars-count">0</span>
+        </div>
+
+        <div class="my-cars-list" id="my-cars-container">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: Shared Car Detail View -->
+  <div class="modal" id="car-detail-modal">
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-content glass">
+      <button class="modal-close" id="modal-close-btn">&times;</button>
+      
+      <div class="modal-body" id="modal-car-detail-body">
+        <!-- Loaded dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom JS -->
+  <script src="app.js"></script>
+</body>
+</html>
